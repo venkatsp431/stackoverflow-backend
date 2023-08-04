@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/user", userRouter);
-app.use("/api/notes", isAuthenticated, notesRouter);
+app.use("/api/users", userRouter);
+app.use("/api/notes", notesRouter);
 
 app.listen(PORT, () => console.log(`Server running in localhost:${PORT}`));

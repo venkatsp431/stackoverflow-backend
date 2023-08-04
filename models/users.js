@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
+const { ObjectId } = mongoose.Schema;
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,6 +22,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  notes: [
+    {
+      type: ObjectId,
+      ref: "notes",
+    },
+  ],
 });
 
 const User = mongoose.model("user", userSchema);

@@ -6,14 +6,21 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+  },
+  code: {
+    type: String,
+  },
   tags: {
     type: String,
   },
-  votes: {
+  views: {
     type: Number,
   },
   answers: {
-    type: Number,
+    type: [Object],
+    default: [],
   },
   user: {
     type: ObjectId,
