@@ -26,8 +26,19 @@ router.get("/userquestions/:id", async (req, res) => {
     const final = userques.filter((question) => {
       return question.user._id.equals(new ObjectId(id));
     });
-    console.log(final);
+
     res.status(200).json({ data: final });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ data: "Internal Server Error" });
+  }
+});
+
+router.get("/question/:id", async (req, res) => {
+  try {
+    const note = await Notes.findOne({ _id: req.params.id });
+    if (!note) res.status(400).json({ data: "No data Found" });
+    res.status(200).json({ data: note });
   } catch (error) {
     console.log(error);
     res.status(500).json({ data: "Internal Server Error" });
@@ -48,6 +59,25 @@ router.put("/question/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ data: "Internal Server Error" });
+  }
+});
+router.delete("/question/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the question by its ID
+    const question = await Notes.deleteOne({ _id: new ObjectId(id) });
+    console.log(question);
+    if (!question) {
+      return res.status(404).json({ message: "Question not found" });
+    }
+
+    // await question.remove();
+
+    res.status(200).json({ message: "Question deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
