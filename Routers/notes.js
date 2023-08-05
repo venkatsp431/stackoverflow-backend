@@ -21,7 +21,7 @@ router.get("/userquestions/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const userques = await Notes.find().populate("user", "name email _id");
-    console.log(userques);
+
     if (!userques) return res.status(400).json({ data: "No data found" });
     const final = userques.filter((question) => {
       return question.user._id.equals(new ObjectId(id));
@@ -67,7 +67,7 @@ router.delete("/question/:id", async (req, res) => {
 
     // Find the question by its ID
     const question = await Notes.deleteOne({ _id: new ObjectId(id) });
-    console.log(question);
+
     if (!question) {
       return res.status(404).json({ message: "Question not found" });
     }
@@ -88,7 +88,7 @@ router.get("/questions/:tags", async (req, res) => {
     if (!ques || ques.length === 0)
       return res.status(400).json("No data found");
     const separatedTags = ques.map((qn) => qn?.tags);
-    console.log(separatedTags);
+
     let taggedQues = [];
     for (let i = 0; i < separatedTags.length; i++) {
       if (separatedTags[i] === undefined) continue;
